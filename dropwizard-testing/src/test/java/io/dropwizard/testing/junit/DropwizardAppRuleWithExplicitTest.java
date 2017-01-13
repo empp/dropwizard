@@ -5,7 +5,11 @@ import io.dropwizard.Application;
 import io.dropwizard.jetty.HttpConnectorFactory;
 import io.dropwizard.server.DefaultServerFactory;
 import io.dropwizard.setup.Environment;
+import org.glassfish.jersey.client.ClientProperties;
+import org.glassfish.jersey.client.JerseyClientBuilder;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -13,7 +17,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Map;
@@ -36,7 +39,20 @@ public class DropwizardAppRuleWithExplicitTest {
         RULE = new DropwizardAppRule<>(TestApplication.class, config);
     }
 
-    Client client = ClientBuilder.newClient();
+    private Client client;
+
+    @Before
+    public void setUp() throws Exception {
+        client = new JerseyClientBuilder()
+            .property(ClientProperties.CONNECT_TIMEOUT, 1000)
+            .property(ClientProperties.READ_TIMEOUT, 5000)
+            .build();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        client.close();
+    }
 
     @Test
     public void runWithExplicitConfig() {
