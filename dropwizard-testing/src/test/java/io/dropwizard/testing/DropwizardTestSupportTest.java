@@ -156,7 +156,6 @@ public class DropwizardTestSupportTest {
             ImmutableCollection<String> names = parameters.get("name");
             String name = !names.isEmpty() ? names.asList().get(0) : "Anonymous";
             output.print("Hello has been said to " + name);
-            output.flush();
         }
     }
 
@@ -169,7 +168,6 @@ public class DropwizardTestSupportTest {
         @Override
         public void execute(ImmutableMultimap<String, String> parameters, String body, PrintWriter output) throws Exception {
             output.print(body);
-            output.flush();
         }
     }
 }
