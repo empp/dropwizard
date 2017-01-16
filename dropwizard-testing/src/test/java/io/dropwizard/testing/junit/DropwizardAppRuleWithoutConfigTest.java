@@ -26,7 +26,9 @@ public class DropwizardAppRuleWithoutConfigTest {
     @ClassRule
     public static final DropwizardAppRule<Configuration> RULE = new DropwizardAppRule<>(TestApplication.class, null,
         ConfigOverride.config("server.applicationConnectors[0].port", "0"),
-        ConfigOverride.config("server.adminConnectors[0].port", "0"));
+        ConfigOverride.config("server.adminConnectors[0].port", "0"),
+        ConfigOverride.config("server.shutdownGracePeriod", "2s")
+    );
 
     private Client client;
 

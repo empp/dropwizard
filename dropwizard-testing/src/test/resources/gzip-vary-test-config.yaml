@@ -1,6 +1,7 @@
 message: "Yes, it's here"
 extra: "Something extra"
 server:
+  shutdownGracePeriod: 2s
   gzip:
     enabled: true
     minimumEntitySize: 0B # Always compress regardless of size

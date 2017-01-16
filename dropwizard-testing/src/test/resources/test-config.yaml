@@ -1,6 +1,7 @@
 message: "Yes, it's here"
 extra: "Something extra"
 server:
+  shutdownGracePeriod: 2s
   applicationConnectors:
     - type: http
       port: 0

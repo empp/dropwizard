@@ -5,6 +5,7 @@ import io.dropwizard.Application;
 import io.dropwizard.jetty.HttpConnectorFactory;
 import io.dropwizard.server.DefaultServerFactory;
 import io.dropwizard.setup.Environment;
+import io.dropwizard.util.Duration;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.junit.After;
@@ -36,6 +37,7 @@ public class DropwizardAppRuleWithExplicitTest {
         DefaultServerFactory sf = (DefaultServerFactory) config.getServerFactory();
         ((HttpConnectorFactory) sf.getApplicationConnectors().get(0)).setPort(0);
         ((HttpConnectorFactory) sf.getAdminConnectors().get(0)).setPort(0);
+        sf.setShutdownGracePeriod(Duration.seconds(2));
         RULE = new DropwizardAppRule<>(TestApplication.class, config);
     }
 
