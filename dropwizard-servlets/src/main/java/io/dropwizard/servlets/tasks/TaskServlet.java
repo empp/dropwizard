@@ -106,8 +106,6 @@ public class TaskServlet extends HttpServlet {
                 output.println();
                 output.println(e.getMessage());
                 e.printStackTrace(output);
-            } finally {
-                output.close();
             }
         } else {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
