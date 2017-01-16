@@ -1,4 +1,6 @@
 machine:
+  pre:
+    - ulimit -c unlimited -S
   timezone: UTC
   java:
     version: oraclejdk8
