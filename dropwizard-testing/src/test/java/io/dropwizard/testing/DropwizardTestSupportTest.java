@@ -33,7 +33,18 @@ import static org.junit.Assert.assertThat;
 public class DropwizardTestSupportTest {
 
     public static final DropwizardTestSupport<TestConfiguration> TEST_SUPPORT =
-        new DropwizardTestSupport<>(TestApplication.class, resourceFilePath("test-config.yaml"));
+        new DropwizardTestSupport<>(TestApplication.class, resourceFilePath("test-config.yaml"))
+        .addListener(new DropwizardTestSupport.ServiceListener<TestConfiguration>() {
+            @Override
+            public void onRun(TestConfiguration configuration, Environment environment, DropwizardTestSupport<TestConfiguration> rule) throws Exception {
+                System.out.println("Start the server");
+            }
+
+            @Override
+            public void onStop(DropwizardTestSupport<TestConfiguration> rule) throws Exception {
+                System.out.println("Stop the server");
+            }
+        });
 
     @BeforeClass
     public static void staticSetUp() {

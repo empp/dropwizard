@@ -32,7 +32,18 @@ public class DropwizardAppRuleTest {
 
     @ClassRule
     public static final DropwizardAppRule<TestConfiguration> RULE =
-        new DropwizardAppRule<>(TestApplication.class, resourceFilePath("test-config.yaml"));
+        new DropwizardAppRule<>(TestApplication.class, resourceFilePath("test-config.yaml"))
+        .addListener(new DropwizardAppRule.ServiceListener<TestConfiguration>() {
+            @Override
+            public void onRun(TestConfiguration configuration, Environment environment, DropwizardAppRule<TestConfiguration> rule) throws Exception {
+                System.out.println("Start the server");
+            }
+
+            @Override
+            public void onStop(DropwizardAppRule<TestConfiguration> rule) throws Exception {
+                System.out.println("Stop the server");
+            }
+        });
 
     private Client client;
 
