@@ -8,6 +8,7 @@ import io.dropwizard.servlets.tasks.Task;
 import io.dropwizard.setup.Environment;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.client.JerseyClientBuilder;
+import org.glassfish.jersey.logging.LoggingFeature;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -19,6 +20,8 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static io.dropwizard.testing.ResourceHelpers.resourceFilePath;
 import static org.hamcrest.core.Is.is;
@@ -38,6 +41,7 @@ public class DropwizardAppRuleTest {
         client = new JerseyClientBuilder()
             .property(ClientProperties.CONNECT_TIMEOUT, 1000)
             .property(ClientProperties.READ_TIMEOUT, 5000)
+            .register(new LoggingFeature(Logger.getLogger("inbound"), Level.INFO, LoggingFeature.Verbosity.PAYLOAD_ANY, 8192))
             .build();
     }
 
