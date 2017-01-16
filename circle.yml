@@ -5,7 +5,7 @@ machine:
   java:
     version: oraclejdk8
   environment:
-    _JAVA_OPTIONS: '-Xms512m -Xmx2g'
+    _JAVA_OPTIONS: '-Xms512m -Xmx2g -XX:+PrintGCDetails'
 dependencies:
   override:
     - mvn dependency:go-offline --fail-never
